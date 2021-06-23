@@ -54,9 +54,13 @@ const getAllChunks = (path, cwd) => {
   return new Promise((resolve) => {
     Promise.all(children).then((childChunks) => {
       const allChunks = childChunks.reduce((all, curr) => {
-        return [...all, ...curr];
+        return [...all, ...curr.chunks];
       }, chunks);
-      resolve(new Set(allChunks));
+      resolve({
+        path,
+        chunks: new Set(allChunks),
+        children: childChunks,
+      });
     });
   });
 }
