@@ -1,0 +1,21 @@
+{
+  "name": "get-dynamic-and-static-imports",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel --watch src --out-dir lib",
+    "output": "nodemon -w lib lib/index.js -q"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.14.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
+    "nodemon": "^2.0.7"
+  }
+}
