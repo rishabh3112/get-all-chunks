@@ -1,3 +1,0 @@
-import a from "apple"
-
-import("Mango")
