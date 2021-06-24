@@ -1,9 +1,11 @@
 {
-  "name": "get-all-chunks",
+  "name": "@rishabh3112/pc",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
-  "bin": "lib/index.js",
+  "bin": {
+    "pc": "lib/index.js"
+  },
   "scripts": {
     "watch": "npm run build -- --watch",
     "build": "babel src --out-dir lib",
@@ -11,7 +13,7 @@
     "serve": "npm run build && cd test/src && node ../../lib/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "@rishabh3112",
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.14.6",
