@@ -8,8 +8,9 @@ const createApp = (root) => {
 
     app.post('/chunks', async (req, res) => {
         const body = req.body;
-        const tree = await getAllChunks(body.path).then(() => {
+        const tree = await getAllChunks(body.path).then((tree) => {
             clearStore();
+            return tree;
         });
         const response = JSON.stringify({
             tree,
