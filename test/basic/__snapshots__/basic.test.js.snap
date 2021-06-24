@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic should output correct chunks 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [],
+      "chunks": Set {
+        "/Users/rishabh/Code/sprinklr/AST/test/basic/src/folderb/b.js",
+        "/Users/rishabh/Code/sprinklr/AST/test/basic/src/folderc/c.js",
+      },
+      "path": "/Users/rishabh/Code/sprinklr/AST/test/basic/src/apple.js",
+    },
+  ],
+  "chunks": Set {
+    "/Users/rishabh/Code/sprinklr/AST/test/basic/src/folderc/c.js",
+    "/Users/rishabh/Code/sprinklr/AST/test/basic/src/folderb/b.js",
+  },
+  "path": "/Users/rishabh/Code/sprinklr/AST/test/basic/src/code.js",
+}
+`;

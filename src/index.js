@@ -3,7 +3,7 @@ import traverse from "@babel/traverse";
 import { existsSync, readFileSync } from "fs";
 import { resolve, dirname } from "path";
 
-const getAllChunks = (path, cwd) => {
+export const getAllChunks = (path, cwd) => {
   const staticImports = [];
   const dynamicImports = new Set();
   
@@ -36,7 +36,7 @@ const getAllChunks = (path, cwd) => {
   const children = [];
 
   // Traverse children of current path, dynamic imports are not children
-  for (const staticImport of staticImports) {
+  for (let staticImport of staticImports) {
     if (!staticImport.endsWith("js")) {
       staticImport += ".js";
     }
@@ -64,7 +64,3 @@ const getAllChunks = (path, cwd) => {
     });
   });
 }
-
-getAllChunks(resolve(__dirname, '../input/code.js'), resolve(__dirname, '../input/')).then((chunks) => {
-  console.log(chunks);
-});
