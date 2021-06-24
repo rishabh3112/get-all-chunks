@@ -22,6 +22,9 @@
     "glob": "^7.1.7",
     "glob-promise": "^4.2.0"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@babel/cli": "^7.14.5",
     "@babel/preset-env": "^7.14.7",
