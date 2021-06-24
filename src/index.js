@@ -3,7 +3,8 @@ import traverse from "@babel/traverse";
 import { existsSync, readFileSync } from "fs";
 import { resolve, dirname } from "path";
 
-export const getAllChunks = (path, cwd) => {
+export const getAllChunks = (path) => {
+  const cwd = dirname(path);
   const staticImports = [];
   const dynamicImports = new Set();
   
@@ -42,11 +43,10 @@ export const getAllChunks = (path, cwd) => {
     }
 
     const pathToStaticImport = resolve(cwd, staticImport);
-    const folderPath = dirname(pathToStaticImport);
     if (!existsSync(pathToStaticImport)) continue;
 
     children.push(
-      getAllChunks(pathToStaticImport, folderPath)
+      getAllChunks(pathToStaticImport)
     );
   }
 
