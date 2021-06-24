@@ -7,7 +7,7 @@ export const getAllChunks = (path) => {
   const cwd = dirname(path);
   const staticImports = [];
   const dynamicImports = new Set();
-  
+
   const code = readFileSync(path).toString();
   const ast = parser.parse(code, { sourceType: "module" });
   traverse(ast, {
@@ -45,11 +45,8 @@ export const getAllChunks = (path) => {
     const pathToStaticImport = resolve(cwd, staticImport);
     if (!existsSync(pathToStaticImport)) continue;
 
-    children.push(
-      getAllChunks(pathToStaticImport)
-    );
+    children.push(getAllChunks(pathToStaticImport));
   }
-
 
   return new Promise((resolve) => {
     Promise.all(children).then((childChunks) => {
@@ -63,4 +60,4 @@ export const getAllChunks = (path) => {
       });
     });
   });
-}
+};
