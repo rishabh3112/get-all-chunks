@@ -23,13 +23,11 @@ describe("basic", () => {
     });
     expect(depTree.path).toBe(testPath);
     expect(depTree.chunks.size).toBe(2);
-    expect(depTree.chunks).toMatchInlineSnapshot(
-      `
+    expect(depTree.chunks).toMatchInlineSnapshot(`
 Set {
-  "${resolve(__dirname, "../src/folderc/c.js")}",
-  "${resolve(__dirname, "../src/folderb/b.js")}",
+  "/Users/rishabh/Code/sprinklr/AST/test/src/folderc/c.tsx",
+  "/Users/rishabh/Code/sprinklr/AST/test/src/folderb/b.js",
 }
-`
-    );
+`);
   });
 });

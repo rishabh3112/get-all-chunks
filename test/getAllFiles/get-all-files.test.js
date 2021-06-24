@@ -11,10 +11,10 @@ describe("getAllFiles", () => {
     });
     expect(files).toMatchInlineSnapshot(`
 Array [
-  "apple.js",
+  "apple.ts",
   "code.js",
   "folderb/b.js",
-  "folderc/c.js",
+  "folderc/c.tsx",
   "mango.js",
 ]
 `);
