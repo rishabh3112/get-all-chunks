@@ -1,36 +1,30 @@
-#!/usr/bin/node
-import express from "express";
-import { getAllFiles } from "./utils/getAllFiles";
-import { getAllChunks } from "./utils/getAllChunks";
+#!/usr/bin/env node
+import createApp from "./server";
+import { program as argParser } from "commander";
+import { resolve } from "path";
 
-const app = express();
+const run = () => {
+    argParser.option('-r, --root <root>', 'Add the specified type of cheese', './');
+    argParser.parse();
+    
+    const args = argParser.opts();
+    if (args.root === undefined) {
+        args.root = "./";
+    }
+    
+    const resolvedRoot = resolve(process.cwd(), args.root);
+    
+    const app = createApp(resolvedRoot);
+    
+    app.listen(3000, () => {
+        const baseRoute = "http://localhost:3000";
+        console.clear();
+        console.log('\n\tPick Chunks\n');
+        console.log(`Root : ${resolvedRoot}`);
+        console.log(`Routes :`);
+        console.log(` - GET  ${baseRoute}/files : Lists all JS/TS/TSX files in root`);
+        console.log(` - POST ${baseRoute}/chunks : Gives list of chunks and dependency tree for given file\n`);
+    })
+}
 
-app.use(express.json());
-
-app.post('/chunks', async (req, res) => {
-    const body = req.body;
-    const tree = await getAllChunks(body.path);
-    const response = JSON.stringify({
-        tree,
-        chunks: tree.chunks,
-    }, (_, value) => {
-        // Stringify Set
-        if (typeof value === 'object' && value instanceof Set) {
-            return [...value];
-        }
-        return value;        
-    });
-    res.json(JSON.parse(response));
-});
-
-app.get('/files', async (req, res) => {
-    const files = await getAllFiles();
-    res.send({
-        cwd: process.cwd(),
-        files,
-    });
-});
-
-app.listen(3000, () => {
-    console.log(`http://localhost:3000/files`);
-});
+run();
