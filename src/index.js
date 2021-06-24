@@ -1,3 +1,4 @@
+#!/usr/bin/node
 import express from "express";
 import { getAllFiles } from "./utils/getAllFiles";
 import { getAllChunks } from "./utils/getAllChunks";

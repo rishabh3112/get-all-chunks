@@ -2,11 +2,13 @@
   "name": "get-all-chunks",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "bin": "lib/index.js",
   "scripts": {
     "watch": "npm run build -- --watch",
     "build": "babel src --out-dir lib",
-    "test": "npm run build && jest"
+    "test": "npm run build && jest",
+    "serve": "npm run build && cd test/src && node ../../lib/index.js"
   },
   "keywords": [],
   "author": "",
