@@ -19,6 +19,12 @@ export const getAllChunks = (path) => {
         dynamicImports.add(path.node.arguments[0].value);
       }
     },
+    ExportNamedDeclaration(path) {
+      staticImports.push(path.node.source.value);
+    },
+    ExportAllDeclaration(path) {
+      staticImports.push(path.node.source.value);
+    }
   });
 
   const chunks = new Set();
