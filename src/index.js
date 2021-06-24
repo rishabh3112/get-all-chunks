@@ -4,7 +4,7 @@ import { program as argParser } from "commander";
 import { resolve } from "path";
 
 const run = () => {
-    argParser.option('-r, --root <root>', 'Add the specified type of cheese', './');
+    argParser.option('-r, --root <root>', 'path to source directory of project', './');
     argParser.parse();
     
     const args = argParser.opts();
