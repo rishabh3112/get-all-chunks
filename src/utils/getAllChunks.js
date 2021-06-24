@@ -4,6 +4,7 @@ import { existsSync, readFileSync } from "fs";
 import { resolve, dirname } from "path";
 
 let store = {};
+const extensions = [".js", ".ts", ".tsx"];
 
 export const clearStore = () => {
   store = {};
@@ -31,7 +32,11 @@ export const getAllChunks = (path) => {
   const dynamicImports = new Set();
 
   const code = readFileSync(path).toString();
-  const ast = parser.parse(code, { sourceType: "module" });
+  const ast = parser.parse(code, {
+    sourceType: "module",
+    plugins: ["jsx", "typescript", "classProperties", "exportDefaultFrom"],
+  });
+
   traverse(ast, {
     ImportDeclaration(path) {
       staticImports.push(path.node.source.value);
@@ -55,29 +60,41 @@ export const getAllChunks = (path) => {
 
   const chunks = new Set();
   dynamicImports.forEach((chunk) => {
-    if (!chunk.endsWith("js")) {
-      chunk += ".js";
+    let chunkPath = chunk;
+    for (const extension of extensions) {
+      if (!chunkPath.endsWith(extension)) {
+        chunkPath += extension;
+      }
+
+      const pathToChunk = resolve(cwd, chunkPath);
+      if (!existsSync(pathToChunk)) {
+        chunkPath = chunk;
+        continue;
+      }
+
+      chunks.add(pathToChunk);
     }
-
-    const pathToChunk = resolve(cwd, chunk);
-    if (!existsSync(pathToChunk)) return;
-
-    chunks.add(pathToChunk);
   });
   dynamicImports.clear();
 
   const children = [];
 
   // Traverse children of current path, dynamic imports are not children
-  for (let staticImport of staticImports) {
-    if (!staticImport.endsWith("js")) {
-      staticImport += ".js";
+  for (const staticImport of staticImports) {
+    let staticImportPath = staticImport;
+    for (const extension of extensions) {
+      if (!staticImportPath.endsWith(extension)) {
+        staticImportPath += extension;
+      }
+
+      const pathToStaticImport = resolve(cwd, staticImportPath);
+      if (!existsSync(pathToStaticImport)) {
+        staticImportPath = staticImport;
+        continue;
+      }
+
+      children.push(getAllChunks(pathToStaticImport));
     }
-
-    const pathToStaticImport = resolve(cwd, staticImport);
-    if (!existsSync(pathToStaticImport)) continue;
-
-    children.push(getAllChunks(pathToStaticImport));
   }
 
   return new Promise((resolve) => {
