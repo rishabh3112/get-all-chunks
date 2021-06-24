@@ -18,4 +18,11 @@ Array [
 ]
 `);
   });
+
+  it("should ignore node_modules", async () => {
+    const files = await getAllFiles(testPath);
+    files.forEach(file => {
+      expect(file).not.toContain('node_modules');
+    });
+  })
 });
