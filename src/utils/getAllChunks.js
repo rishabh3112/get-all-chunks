@@ -3,7 +3,17 @@ import traverse from "@babel/traverse";
 import { existsSync, readFileSync } from "fs";
 import { resolve, dirname } from "path";
 
+let store = {};
+
+export const clearStore = () => {
+  store = {};
+};
+
 export const getAllChunks = (path) => {
+  if (store[path] !== undefined) {
+    return Promise.resolve(store[path]);
+  }
+
   const cwd = dirname(path);
   const staticImports = [];
   const dynamicImports = new Set();
@@ -28,7 +38,7 @@ export const getAllChunks = (path) => {
       if (!!path.node.source) {
         staticImports.push(path.node.source.value);
       }
-    }
+    },
   });
 
   const chunks = new Set();
@@ -63,11 +73,14 @@ export const getAllChunks = (path) => {
       const allChunks = childChunks.reduce((all, curr) => {
         return [...all, ...curr.chunks];
       }, chunks);
-      resolve({
+
+      store[path] = {
         path,
         chunks: new Set(allChunks),
         children: childChunks,
-      });
+      };
+
+      resolve(store[path]);
     });
   });
 };
