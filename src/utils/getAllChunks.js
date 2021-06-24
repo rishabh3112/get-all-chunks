@@ -10,9 +10,21 @@ export const clearStore = () => {
 };
 
 export const getAllChunks = (path) => {
+
+  if (store[path] === null) {
+    return Promise.resolve({
+      path,
+      children: [],
+      chunks: new Set(),
+      isCyclic: true,
+    });
+  }
+
   if (store[path] !== undefined) {
     return Promise.resolve(store[path]);
   }
+
+  store[path] = null;
 
   const cwd = dirname(path);
   const staticImports = [];

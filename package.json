@@ -10,7 +10,7 @@
     "watch": "npm run build -- --watch",
     "build": "babel src --out-dir lib",
     "test": "npm run build && jest",
-    "serve": "npm run build && node ../../lib/index.js -r ./test/src"
+    "serve": "npm run build && node lib/index.js -r ./test/src"
   },
   "keywords": [],
   "author": "@rishabh3112",

@@ -1,3 +1,5 @@
+import "./code";
+
 import("./folderb/b");
 import("./folderc/c");
 
