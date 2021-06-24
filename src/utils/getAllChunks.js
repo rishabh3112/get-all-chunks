@@ -20,10 +20,14 @@ export const getAllChunks = (path) => {
       }
     },
     ExportNamedDeclaration(path) {
-      staticImports.push(path.node.source.value);
+      if (!!path.node.source) {
+        staticImports.push(path.node.source.value);
+      }
     },
     ExportAllDeclaration(path) {
-      staticImports.push(path.node.source.value);
+      if (!!path.node.source) {
+        staticImports.push(path.node.source.value);
+      }
     }
   });
 

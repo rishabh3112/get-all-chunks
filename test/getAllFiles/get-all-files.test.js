@@ -15,6 +15,7 @@ Array [
   "code.js",
   "folderb/b.js",
   "folderc/c.js",
+  "mango.js",
 ]
 `);
   });
