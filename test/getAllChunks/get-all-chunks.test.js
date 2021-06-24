@@ -1,7 +1,7 @@
 const { getAllChunks } = require("../../lib/utils/getAllChunks.js");
 const { resolve } = require("path");
 
-const testPath = resolve(__dirname, "./src/code.js");
+const testPath = resolve(__dirname, "../src/code.js");
 
 describe("basic", () => {
   it("should output correct dependency tree", async () => {
@@ -20,8 +20,8 @@ describe("basic", () => {
     expect(depTree.chunks).toMatchInlineSnapshot(
       `
 Set {
-  "${resolve(__dirname, "./src/folderc/c.js")}",
-  "${resolve(__dirname, "./src/folderb/b.js")}",
+  "${resolve(__dirname, "../src/folderc/c.js")}",
+  "${resolve(__dirname, "../src/folderb/b.js")}",
 }
 `
     );
