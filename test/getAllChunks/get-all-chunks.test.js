@@ -1,4 +1,4 @@
-const { getAllChunks } = require("../../lib/index.js");
+const { getAllChunks } = require("../../lib/utils/getAllChunks.js");
 const { resolve } = require("path");
 
 const testPath = resolve(__dirname, "./src/code.js");

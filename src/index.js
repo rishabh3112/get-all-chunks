@@ -1,63 +1,17 @@
-import * as parser from "@babel/parser";
-import traverse from "@babel/traverse";
-import { existsSync, readFileSync } from "fs";
-import { resolve, dirname } from "path";
+import express from "express";
 
-export const getAllChunks = (path) => {
-  const cwd = dirname(path);
-  const staticImports = [];
-  const dynamicImports = new Set();
+const app = express();
 
-  const code = readFileSync(path).toString();
-  const ast = parser.parse(code, { sourceType: "module" });
-  traverse(ast, {
-    ImportDeclaration(path) {
-      staticImports.push(path.node.source.value);
-    },
-    CallExpression(path) {
-      if (path.node.callee.type === "Import") {
-        dynamicImports.add(path.node.arguments[0].value);
-      }
-    },
-  });
+app.use(express.json());
 
-  const chunks = new Set();
-  dynamicImports.forEach((chunk) => {
-    if (!chunk.endsWith("js")) {
-      chunk += ".js";
-    }
+app.post('/chunks', (req, res) => {
+    // TODO
+});
 
-    const pathToChunk = resolve(cwd, chunk);
-    if (!existsSync(pathToChunk)) return;
+app.get('/files', (req, res) => {
+    // TODO
+});
 
-    chunks.add(pathToChunk);
-  });
-  dynamicImports.clear();
+app.listen(3000, () => {
 
-  const children = [];
-
-  // Traverse children of current path, dynamic imports are not children
-  for (let staticImport of staticImports) {
-    if (!staticImport.endsWith("js")) {
-      staticImport += ".js";
-    }
-
-    const pathToStaticImport = resolve(cwd, staticImport);
-    if (!existsSync(pathToStaticImport)) continue;
-
-    children.push(getAllChunks(pathToStaticImport));
-  }
-
-  return new Promise((resolve) => {
-    Promise.all(children).then((childChunks) => {
-      const allChunks = childChunks.reduce((all, curr) => {
-        return [...all, ...curr.chunks];
-      }, chunks);
-      resolve({
-        path,
-        chunks: new Set(allChunks),
-        children: childChunks,
-      });
-    });
-  });
-};
+});
