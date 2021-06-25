@@ -28,7 +28,7 @@ const createApp = (root) => {
     app.get('/files', async (_, res) => {
         const files = await getAllFiles(root);
         res.send({
-            cwd: process.cwd(),
+            directory: root,
             files,
         });
     });
