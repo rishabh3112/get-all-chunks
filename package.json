@@ -2,7 +2,7 @@
   "name": "@rishabh3112/pc",
   "version": "1.1.0",
   "description": "",
-  "main": "lib/index.js",
+  "main": "lib/exports.js",
   "bin": {
     "pc": "lib/index.js"
   },
