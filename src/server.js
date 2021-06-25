@@ -29,8 +29,9 @@ const createApp = (root) => {
     res.json(JSON.parse(response));
   });
 
-  app.get("/files", async (_, res) => {
-    const files = await getAllFiles(root);
+  app.get("/files", async (req, res) => {
+    const query = req.query.q || "";
+    const files = await getAllFiles(root, query);
     const filesPerPage = 10;
     const pages = {};
 
